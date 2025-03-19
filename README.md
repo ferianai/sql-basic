@@ -105,3 +105,38 @@ To set up the database:
 ```bash
 psql -f run_all.sql
 ```
+
+```mermaid
+erDiagram
+    USERS {
+        INT id PK "Unique identifier"
+        VARCHAR username "Username for login"
+        VARCHAR email "User's email address"
+        VARCHAR password_hash "Securely hashed user password"
+        DATETIME created_at "Timestamp of user creation"
+        DATETIME updated_at "Timestamp of user information update"
+    }
+
+    ACCOUNTS {
+        INT id PK "Unique identifier"
+        INT user_id FK "User associated with the account"
+        VARCHAR account_type "Type of account"
+        VARCHAR account_number "Unique account number"
+        DECIMAL balance "Current balance of the account"
+        DATETIME created_at "Timestamp of account creation"
+        DATETIME updated_at "Timestamp of account information update"
+    }
+
+    TRANSACTIONS {
+        INT id PK "Unique identifier"
+        INT from_account_id FK "Account initiating the transaction (optional for transfers)"
+        INT to_account_id FK "Account receiving the transaction (optional for deposits)"
+        DECIMAL amount "Transaction amount"
+        VARCHAR type "Type of transaction (e.g., deposit, withdrawal, transfer)"
+        VARCHAR description "Optional description of the transaction"
+        DATETIME created_at "Timestamp of transaction creation"
+    }
+
+    USERS ||--o| ACCOUNTS : has
+    ACCOUNTS ||--o| TRANSACTIONS : i
+```
