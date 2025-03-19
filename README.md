@@ -140,3 +140,5 @@ erDiagram
     USERS ||--o| ACCOUNTS : has
     ACCOUNTS ||--o| TRANSACTIONS : i
 ```
+
+boole update last update
