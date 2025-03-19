@@ -1,0 +1,52 @@
+version: '3.8' # specify docker-compose version
+
+services:
+  # Service for PostgreSQL
+  postgres:
+    image: postgres:16-alpine
+    restart: always # restart the container automatically if it fails
+    container_name: postgres
+    environment:
+      - POSTGRES_USER=myuser # set the database user
+      - POSTGRES_PASSWORD=mypassword # set the database password for the user
+      - POSTGRES_DB=mydatabase # set the database name for the user to connect to (default: postgres)
+    ports:
+      - "5432:5432" # map port 5432 on the host to port 5432 on the container (default PostgreSQL port)
+    volumes:
+      - postgres-data:/var/lib/postgresql/data # mount the volume to persist the data
+    networks:
+      - my_network # connect the service to the network
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U myuser -d mydatabase"] # check if the PostgreSQL service is ready
+      interval: 5s # check the health status every 5 seconds
+      timeout: 5s # wait for the health check to complete within 5 seconds 
+      retries: 5 # allow 5 retries before marking the service as unhealthy
+
+  # Service for the web application pgAdmin
+  pgadmin:
+    image: dpage/pgadmin4
+    restart: always # restart the container automatically if it fails
+    container_name: pgadmin
+    environment:
+      - PGADMIN_DEFAULT_EMAIL=admin@admin.com # set the default email address for the pgAdmin user
+      - PGADMIN_DEFAULT_PASSWORD=admin # set the default password for the pgAdmin user
+    ports:
+      - "5050:80" # map port 5050 on the host to port 80 on the container (default pgAdmin port) or use 443 for HTTPS connections
+    depends_on:
+      - postgres # wait for the PostgreSQL service to be ready before starting the pgAdmin service
+    volumes:
+      - pgadmin_data:/var/lib/pgadmin # mount the volume to persist the data
+    networks:
+      - my_network # connect the service to the network
+
+# Define the volumes (untuk menyimpan/persist data)
+volumes:
+  postgres-data:
+    driver: local  
+  pgadmin_data:
+    driver: local
+
+# Define the networks (for communication between services)
+networks:
+  my_network:
+    driver: bridge
