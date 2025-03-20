@@ -112,6 +112,10 @@ erDiagram
         INT id PK "Unique identifier"
         VARCHAR username "Username for login"
         VARCHAR email "User's email address"
+        VARCHAR phone "User's phone number"
+        DATE birth_date "User's date of birth"
+        VARCHAR address "User's address"
+        VARCHAR gender "User's gender"
         VARCHAR password_hash "Securely hashed user password"
         DATETIME created_at "Timestamp of user creation"
         DATETIME updated_at "Timestamp of user information update"
@@ -140,5 +144,3 @@ erDiagram
     USERS ||--o| ACCOUNTS : has
     ACCOUNTS ||--o| TRANSACTIONS : i
 ```
-
-boole update last update
