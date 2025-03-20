@@ -136,7 +136,7 @@ erDiagram
         INT from_account_id FK "Account initiating the transaction (optional for transfers)"
         INT to_account_id FK "Account receiving the transaction (optional for deposits)"
         DECIMAL amount "Transaction amount"
-        VARCHAR type "Type of transaction (e.g., deposit, withdrawal, transfer)"
+        ENUM type "Type of transaction (deposit, withdrawal, transfer)"
         VARCHAR description "Optional description of the transaction"
         DATETIME created_at "Timestamp of transaction creation"
     }
