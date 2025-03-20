@@ -141,6 +141,6 @@ erDiagram
         DATETIME created_at "Timestamp of transaction creation"
     }
 
-    USERS ||--o| ACCOUNTS : has
-    ACCOUNTS ||--o| TRANSACTIONS : i
+    USERS ||--o{ ACCOUNTS : has
+    ACCOUNTS ||--o{ TRANSACTIONS : has
 ```
